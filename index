@@ -1,1 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Corazón 3D - Feliz Mesario</title>
+  <style>
+    :root {
+      --bg: #2a0214;
+      --rose: #ff3b7f;
+      --rose-dark: #c4144f;
+      --rose-light: #ff8fb7;
+      --gold: #ffd1dc;
+      --text: #fff4f8;
+      --shadow: rgba(0, 0, 0, 0.35);
+    }
 
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #3a0430, var(--bg));
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      color: var(--text);
+    }
+
+    .scene {
+      width: min(92vw, 520px);
+      text-align: center;
+      padding: 32px 24px 40px;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+      letter-spacing: 0.2rem;
+      text-transform: uppercase;
+      color: #ffd9e6;
+    }
+
+    .heart-wrapper {
+      position: relative;
+      display: grid;
+      place-items: center;
+      margin: 12px auto 24px;
+    }
+
+    .heart-svg {
+      width: min(70vw, 360px);
+      height: auto;
+      filter: drop-shadow(0 18px 20px var(--shadow));
+      transform: rotateX(12deg) rotateZ(-2deg);
+      transition: transform 0.6s ease;
+    }
+
+    .heart-wrapper:hover .heart-svg {
+      transform: rotateX(4deg) rotateZ(0deg) scale(1.02);
+    }
+
+    .heart-base {
+      fill: url(#heart-gradient);
+    }
+
+    .heart-highlight {
+      fill: url(#highlight-gradient);
+      opacity: 0.65;
+    }
+
+    .heart-part {
+      cursor: pointer;
+      transition: transform 0.25s ease, filter 0.25s ease;
+    }
+
+    .heart-part:hover {
+      transform: translateY(-4px) scale(1.02);
+      filter: brightness(1.2);
+    }
+
+    .center-letter {
+      position: absolute;
+      font-size: clamp(2.8rem, 6vw, 3.8rem);
+      font-weight: 700;
+      color: #fff5f7;
+      text-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+      pointer-events: none;
+    }
+
+    .message-box {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 16px 20px;
+      border-radius: 18px;
+      font-size: 1rem;
+      min-height: 70px;
+      display: grid;
+      place-items: center;
+      color: var(--gold);
+      box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.08);
+    }
+
+    .message-box strong {
+      color: #ffe7f0;
+    }
+
+    .hint {
+      margin-top: 16px;
+      font-size: 0.95rem;
+      color: #f7c4d4;
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        letter-spacing: 0.12rem;
+      }
+
+      .scene {
+        padding: 26px 18px 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="scene">
+    <h1>Feliz mesario</h1>
+
+    <div class="heart-wrapper">
+      <svg class="heart-svg" viewBox="0 0 200 180" aria-labelledby="titulo" role="img">
+        <title id="titulo">Corazón 3D con mensajes</title>
+        <defs>
+          <path id="heart-shape" d="M100 170 C30 120 10 70 30 40 C55 10 95 20 100 50 C105 20 145 10 170 40 C190 70 170 120 100 170 Z" />
+          <clipPath id="heart-clip">
+            <use href="#heart-shape" />
+          </clipPath>
+          <linearGradient id="heart-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ff6a9f" />
+            <stop offset="45%" stop-color="#f7376f" />
+            <stop offset="100%" stop-color="#b11043" />
+          </linearGradient>
+          <radialGradient id="highlight-gradient" cx="35%" cy="25%" r="60%">
+            <stop offset="0%" stop-color="#ffd1e3" />
+            <stop offset="60%" stop-color="transparent" />
+          </radialGradient>
+          <linearGradient id="segment-left" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#ff8fb7" />
+            <stop offset="100%" stop-color="#d91c5c" />
+          </linearGradient>
+          <linearGradient id="segment-right" x1="100%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#ff5c9a" />
+            <stop offset="100%" stop-color="#b40f45" />
+          </linearGradient>
+          <linearGradient id="segment-bottom" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#ff7098" />
+            <stop offset="100%" stop-color="#d0145f" />
+          </linearGradient>
+        </defs>
+
+        <use class="heart-base" href="#heart-shape" />
+        <use class="heart-highlight" href="#heart-shape" />
+
+        <g clip-path="url(#heart-clip)">
+          <rect class="heart-part" data-message="Eres mi latido favorito, mi lugar seguro." x="0" y="0" width="100" height="90" fill="url(#segment-left)" />
+          <rect class="heart-part" data-message="Contigo cada día es un capítulo que quiero vivir." x="100" y="0" width="100" height="90" fill="url(#segment-right)" />
+          <rect class="heart-part" data-message="Tu sonrisa es el regalo más bonito de mi corazón." x="0" y="90" width="100" height="90" fill="url(#segment-bottom)" />
+          <rect class="heart-part" data-message="Gracias por ser mi amor, mi paz y mi aventura." x="100" y="90" width="100" height="90" fill="url(#segment-left)" />
+        </g>
+      </svg>
+      <div class="center-letter">G</div>
+    </div>
+
+    <div class="message-box" id="messageBox">
+      <strong>Haz clic en una parte del corazón</strong>
+    </div>
+
+    <div class="hint">Cada parte guarda un mensaje de amor solo para ti.</div>
+  </main>
+
+  <script>
+    const messageBox = document.getElementById("messageBox");
+    const parts = document.querySelectorAll(".heart-part");
+
+    parts.forEach((part) => {
+      part.addEventListener("click", () => {
+        const message = part.dataset.message;
+        messageBox.innerHTML = `<strong>${message}</strong>`;
+      });
+    });
+  </script>
+</body>
+</html>
